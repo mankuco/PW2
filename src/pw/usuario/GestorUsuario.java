@@ -18,7 +18,6 @@ public class GestorUsuario {
 		this.usuarios = this.cargarUsuarios();
 	}
 	
-
 	/* 
 	 * @Resumen Pide los datos para un nuevo usuario y lo añade a la lista
 	 */
@@ -46,13 +45,9 @@ public class GestorUsuario {
 		nuevoUsuario.setNombre(nuevoNombre);
 		nuevoUsuario.setApellidos(nuevoApellidos);
 		nuevoUsuario.setFechaNacimiento(convertirFechas(nuevaFechaNacimiento));
-		
-		
 		usuarios.add(nuevoUsuario);
 		System.out.println("Usuario registrado correctamente.");
-		
 	}
-
 
 	/* 
 	 * @Resumen Pide el email para encontrar al usuario, si lo encuentra, imprime
@@ -108,6 +103,7 @@ public class GestorUsuario {
 			}
 		}
 	}
+	
 	/* 
 	 * @Resumen Introduces una cadena, que contiene una fecha y la convierte al tipo LocalDate
 	 * @param fecha = cadena con la fecha

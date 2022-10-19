@@ -31,72 +31,72 @@ public class ProgramaPistas {
 			String aux = scan.nextLine();
 			try{
 				num = Integer.parseInt(aux);
-			}
-			catch (NumberFormatException e) {
-				System.out.print("Formato no valido");
-			}
-			switch(num) {
-				case 1:
-					factoryGestor.crearPista();
-					break;
-				case 2:
-					factoryGestor.crearKart();
-					break;
-				case 3:
-					factoryGestor.asociarKarts();
-					break;
-				case 4:
-					System.out.println("Introduce el numero de karts");
-					String a = scan.nextLine();
-					int numkarts,dific;
-					try{
-						numkarts = Integer.parseInt(a);
-					}
-					catch (NumberFormatException e) {
-						System.out.print("Formato no valido");
-					}
-					
-
-					Dificultades dificultad;
-					int i=0;
-					while(i==0){
-						i=1;
-						System.out.println("Quiere que la pista sea:");
-						System.out.println("1. Familiar");
-						System.out.println("2. Adulto");
-						System.out.println("3. Infantil");
-						a = scan.nextLine();
+				switch(num) {
+					case 1:
+						factoryGestor.crearPista();
+						break;
+					case 2:
+						factoryGestor.crearKart();
+						break;
+					case 3:
+						factoryGestor.asociarKarts();
+						break;
+					case 4:
+						System.out.println("Introduce el numero de karts");
+						String a = scan.nextLine();
+						int numkarts,dific;
 						try{
-							dific = Integer.parseInt(a);
+							numkarts = Integer.parseInt(a);
+							Dificultades dificultad;
+							int i=0;
+							while(i==0){
+								i=1;
+								System.out.println("Quiere que la pista sea:");
+								System.out.println("1. Familiar");
+								System.out.println("2. Adulto");
+								System.out.println("3. Infantil");
+								a = scan.nextLine();
+								try{
+									dific = Integer.parseInt(a);
+									switch(dific) {
+										case 1:
+											dificultad=Dificultades.FAMILIAR;
+											break;
+										case 2:
+											dificultad=Dificultades.ADULTOS;
+											break;
+										case 3:
+											dificultad=Dificultades.INFANTIL;
+											break;
+										default:
+											System.out.print("Formato no valido");
+											i=0;
+											break;	
+									}
+									if((dific==1) || (dific==2) || (dific==3)) {
+										ArrayList<Pista> disponibles = factoryGestor.pistasDisponibles(numkarts, dificultad);
+										for (Pista b : disponibles) {
+											System.out.println(b.toString());
+										}
+									}
+								}
+								catch (NumberFormatException e) {
+									System.out.print("Formato no valido");
+								}
+							}
 						}
 						catch (NumberFormatException e) {
 							System.out.print("Formato no valido");
 						}
-						switch(dific) {
-							case 1:
-								dificultad=Dificultades.FAMILIAR;
-								break;
-							case 2:
-								dificultad=Dificultades.ADULTOS;
-								break;
-							case 3:
-								dificultad=Dificultades.INFANTIL;
-								break;
-							default:
-								System.out.print("Formato no valido");
-								i=0;
-								break;							
-						}
-					}
-					ArrayList<Pista> disponibles = factoryGestor.pistasDisponibles(numkarts, dificultad);
-					for (Pista b : disponibles) {
-						System.out.println(b.toString());
-					}
-					break;
-				case 5:
-					break;
-				default:
-					System.out.println("Opcion no valida");
+						break;
+					case 5:
+						break;
+					default:
+						System.out.println("Opcion no valida");
+				}	
+			}
+			catch (NumberFormatException e) {
+				System.out.print("Formato no valido");
 			}
 		}
 	}
