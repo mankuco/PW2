@@ -112,7 +112,7 @@ public void modificarReservaFamiliar(String idR, String idU, int minR, Float pre
 		ArrayList<ReservaFamiliar> reservas;
 		reservas=this.reservasFamiliares;
 		for(Iterator<ReservaFamiliar> iterator = reservas.iterator(); iterator.hasNext();) {
-			Reserva aux = iterator.next();
+			ReservaDAO aux = iterator.next();
 			if (aux.getIdReserva() == ID) {
 				iterator.remove();
 			}
@@ -124,7 +124,7 @@ public void modificarReservaFamiliar(String idR, String idU, int minR, Float pre
 		ArrayList<ReservaAdultos> reservas;
 		reservas=this.reservasAdultos;
 		for(Iterator<ReservaAdultos> iterator = reservas.iterator(); iterator.hasNext();) {
-			Reserva aux = iterator.next();
+			ReservaDAO aux = iterator.next();
 			if (aux.getIdReserva() == ID) {
 				iterator.remove();
 			}
@@ -136,7 +136,7 @@ public void modificarReservaFamiliar(String idR, String idU, int minR, Float pre
 		ArrayList<ReservaInfantil> reservas;
 		reservas=this.reservasInfantiles;
 		for(Iterator<ReservaInfantil> iterator = reservas.iterator(); iterator.hasNext();) {
-			Reserva aux = iterator.next();
+			ReservaDAO aux = iterator.next();
 			if (aux.getIdReserva() == ID) {
 				iterator.remove();
 			}
