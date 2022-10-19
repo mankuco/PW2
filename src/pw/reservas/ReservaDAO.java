@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
-public abstract class Reserva {
+public abstract class ReservaDAO {
 
 	protected String idReserva;
 	protected String idUsuario;
@@ -17,7 +17,7 @@ public abstract class Reserva {
 	protected String modalidad;
 	
 	
-	public Reserva(String idUsuario, int minutosReserva, float precioPista, int descuento,
+	public ReservaDAO(String idUsuario, int minutosReserva, float precioPista, int descuento,
 			 String modalidad) {
 				
 		this.idReserva = generarIdUnico();
@@ -32,7 +32,7 @@ public abstract class Reserva {
 
 	
 	
-	public Reserva() {
+	public ReservaDAO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

@@ -3,7 +3,7 @@ package pw.reservas;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class ReservaFamiliar extends Reserva {
+public class ReservaFamiliar extends ReservaDAO {
 	
 	protected int NumeroNinos;
 	protected int NumeroAdultos;
