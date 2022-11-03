@@ -5,10 +5,11 @@ import java.util.ArrayList;
 public class Pista {
 	
 	private String nombrePista;
-	private boolean tipoEstado;
+	private boolean tipoEstado; //true si esta disponible a reserva
 	private Dificultades dificultad;
 	private int maxKarts;
-	private ArrayList<Kart> listaKarts;
+	private int nkartsasociados;
+	//private ArrayList<Kart> listaKarts;
 	
 	//CONSTRUCTOR PARAMETRIZADO
 	public Pista(String nombrePista, boolean tipoEstado, Dificultades dificultad, int maxKarts, ArrayList<Kart> listaKarts) {

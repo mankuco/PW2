@@ -5,6 +5,7 @@ public class Kart {
 	private int idKart;
 	private boolean tipoKart;  //True= Adulto  False= Infantil
 	private Estados estado;	
+	private String nombrePista;
 	
 	//CONSTRUCTOR PARAMETRIZADO
 	public Kart(int idKart, boolean tipoKart, Estados estado) {
