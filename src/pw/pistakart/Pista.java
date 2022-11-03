@@ -9,16 +9,16 @@ public class Pista {
 	private Dificultades dificultad;
 	private int maxKarts;
 	private int nkartsasociados;
-	//private ArrayList<Kart> listaKarts;
+	private ArrayList<Kart> listaKarts;
 	
 	//CONSTRUCTOR PARAMETRIZADO
-	public Pista(String nombrePista, boolean tipoEstado, Dificultades dificultad, int maxKarts, ArrayList<Kart> listaKarts) {
+	public Pista(String nombrePista, boolean tipoEstado, Dificultades dificultad, int maxKarts) {
 		super();
 		this.nombrePista = nombrePista;
 		this.tipoEstado = tipoEstado;
 		this.dificultad = dificultad;
 		this.maxKarts = maxKarts;
-		this.listaKarts = listaKarts;
+		this.nkartsasociados=0;
 	}
 	//CONSTRUCTOR
 	public Pista() {
@@ -83,6 +83,20 @@ public class Pista {
 		this.maxKarts = maxKarts;
 	}
 	/* 
+	 * @Resumen Devuelve el numero de karts asignados una pista
+	 * @return nkartsasociados = int 
+	 */
+	public int getnkartsasociados() {
+		return nkartsasociados;
+	}
+	/* 
+	 * @Resumen Cambia el numero de karts asignados una pista
+	 * @param nkartsasociados = int 
+	 */
+	public void setnkartsasociados(int nkartsasociados) {
+		this.nkartsasociados = nkartsasociados;
+	}
+	/* 
 	 * @Resumen Devuelve un vector con todas las pistas
 	 * @return listaKarts = ArrayList<Kart> 
 	 */
@@ -103,14 +117,13 @@ public class Pista {
 	 * @return listaKartsDisponibles = ArrayList<Kart> 
 	 */
 	public ArrayList<Kart> consultarKartsDisponibles() {
+		
 		ArrayList<Kart> listaKartsDisponibles = new ArrayList<Kart>();
 		ArrayList<Kart> listaAUX = getListaKarts();
 		
-		for(int i=0; i < listaAUX.size(); i++ )
-		{
+		for(int i=0; i < listaAUX.size(); i++ ) {
 		   if(listaAUX.get(i).getEstado() == Estados.DISPONIBLE) {
-			 
-			listaKartsDisponibles.add(listaAUX.get(i));
+			   listaKartsDisponibles.add(listaAUX.get(i));
 		   }
 		}
 		
@@ -123,18 +136,9 @@ public class Pista {
 	 * @param pista = Pista 
 	 */
 	public void asociarKartPista(Kart kart, Pista pista) {
-		if(pista.getDificultad()== Dificultades.ADULTOS && kart.getTipoKart() == true){
-			pista.getListaKarts().add(kart);
-		}
-		if(pista.getDificultad()== Dificultades.INFANTIL && kart.getTipoKart() == false){
-			pista.getListaKarts().add(kart);
-		}
-		if(pista.getDificultad()== Dificultades.FAMILIAR){
-			pista.getListaKarts().add(kart);
-		}
-		else {
-			System.out.println("Kart no valido para esta pista");
-		}
+		pista.getListaKarts().add(kart);
+		kart.setnombrePista(pista.getNombrePista());
+		nkartsasociados++;
 	}
 	
 	/* 
@@ -143,7 +147,7 @@ public class Pista {
 	 */
 	@Override
 	public String toString() {
-		return "pista [nombrePista=" + nombrePista + ", tipoEstado=" + tipoEstado + ", dificultad=" + dificultad
+		return "Pista [nombrePista=" + nombrePista + ", tipoEstado=" + tipoEstado + ", dificultad=" + dificultad
 				+ ", maxKarts=" + maxKarts + ", listaKarts=" + listaKarts + "]";
 
 	}

@@ -4,122 +4,51 @@ import java.util.ArrayList;
 import pw.fichero.*;
 import java.util.Scanner;
 
+import es.uco.pw.p2.data.dao.UserDAO;
 import pw.usuario.Usuario;
 
 public class GestorPistas {
 	
-	private ArrayList<Pista> pistas = new ArrayList<Pista>();
-	private ArrayList<Kart> karts = new ArrayList<Kart>();
-	
-	public GestorPistas(){
-		pistas.clear();
-		this.pistas = this.cargarPistas();
-		karts.clear();
-		this.karts = this.cargarKarts();
-	}
+	public GestorPistas(){ }
 
 	/* 
-	 * @Resumen Crea una pista, si no existe ya, y la guarda en la lista pistas
+	 * @Resumen Devuelve la pista, si esta registrada en la base de datos., si no lo esta devuelve NULL
 	 */
-	public void crearPista() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Introduce el nombre de la pista");
-		String nombrePista = sc.nextLine();
-		boolean existe = false;
-		for (Pista pista : pistas) {
-			if (pista.getNombrePista().equals(nombrePista)) {
-				existe = true;
-			}
-		}
-		if (existe) {
-			System.out.println("La pista ya existe");
-		}
-		else {
-			System.out.println("Introduce el tipo de pista");
-			boolean tipoEstado = sc.nextBoolean();
-			System.out.println("Introduce la dificultad");
-			Dificultades dificultad = Dificultades.valueOf(sc.next());
-			System.out.println("Introduce el numero maximo de karts");
-			int maxKarts = sc.nextInt();
-			ArrayList<Kart> listaKarts = new ArrayList<Kart>();
-			Pista pista = new Pista(nombrePista, tipoEstado, dificultad, maxKarts, listaKarts);
-			pistas.add(pista);
-			System.out.println("Pista creada");
-		}
+	public Pista existePista(String nombrePista) {
+		//////////////////////////////////////////////////////////////////////
+		Pista pista = new Pista(nombrePista, true, Dificultades.ADULTOS, 30);
+		return pista;
 	}
-
+	public void crearPista(String nombre, boolean tipoEstado, Dificultades dificultad, int maxKarts) {
+		Pista pista = new Pista(nombre, tipoEstado, dificultad, maxKarts);
+		PistaDAO crear = new PistaDAO();
+		crear.guardarPista(nombre, tipoEstado, dificultad, maxKarts);
+	}
+	/* 
+	 * @Resumen Devuelve el kart, si esta registrado en la base de datos., si no lo esta devuelve NULL
+	 */
+	public Kart existeKart(int idKart) {
+		//////////////////////////////////////////////////////////////////////
+		Kart kart = new Kart(idKart, true, Estados.DISPONIBLE);
+		return kart;
+	}
 	/* 
 	 * @Resumen Crea un kart, si no existe ya, y la guarda en la lista karts
 	 */
-	public void crearKart() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Introduce el id del kart");
-		int idKart = sc.nextInt();
-		boolean existe = false;
-		for (Kart kart : karts) {
-			if (kart.getIdKart() == idKart) {
-				existe = true;
-			}
-		}
-		if (existe) {
-			System.out.println("El kart ya existe");
-		}
-		else {
-			System.out.println("Introduce el estado del kart");
-			Estados estado = Estados.valueOf(sc.next());
-			System.out.println("Introduce el tipo de kart");
-			boolean tipoKart = sc.nextBoolean();
-			Kart kart = new Kart(idKart,tipoKart, estado);
-			karts.add(kart);
-			System.out.println("Kart creado");
-		}
+	public void crearKart(int idKart, boolean tipoKart, Estados estado) {
+		Kart kart = new Kart(idKart,tipoKart, estado);
+		KartDAO crear = new KartDAO();
+		crear.guardarKart(idKart,tipoKart, estado);
 	}
-
-	/* 
-	 * @Resumen Pide una pista, si existe, pide la identificacion del kart, si este existe y
-	 * hay espacio en la pista, llama a la funcion asociarKartPista() para esta pista
-	 */
-	public void asociarKarts(){
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Introduce el nombre de la pista");
-		String nombrePista = sc.nextLine();
-		boolean existe = false;
-		for (Pista pista : pistas) {
-			if (pista.getNombrePista().equals(nombrePista)) {
-				existe = true;
-				System.out.println("Introduce el id del kart");
-				int idKart = sc.nextInt();
-				boolean existeKart = false;
-				for (Kart kart : karts) {
-					if (kart.getIdKart() == idKart) {
-						existeKart = true;
-						if (pista.getListaKarts().size() < pista.getMaxKarts()) {
-							pista.asociarKartPista(kart, pista);
-						}
-						else {
-							System.out.println("La pista esta llena");
-						}
-					}
-				}
-				if (!existeKart) {
-					System.out.println("El kart no existe");
-				}
-			}
-		}
-		if (!existe) {
-			System.out.println("La pista no existe");
-		}
-	}
+	
 
 	/* 
 	 * @Resumen Lista todas las pistas que no estén en mantenimiento
 	 */
-	public void listarPistas() {
-		for (Pista pista : pistas) {
-			if(!pista.isTipoEstado()) {
-				System.out.println(pista.getNombrePista() + " " + pista.getDificultad() + " " + pista.getMaxKarts());
-			}
-		}
+	public ArrayList<Pista> listarPistasmantenimiento() {
+		PistaDAO listar= new PistaDAO();
+		ArrayList<Pista> pistas = listar.listarmantenimiento();
+		return pistas;
 	}
 	
 	/* 
@@ -129,16 +58,9 @@ public class GestorPistas {
 	 * @return disponibles, devuelve un vector con todas las pistas que cumplen los requisitos
 	 */
 	public ArrayList<Pista> pistasDisponibles (int numKart, Dificultades dificultad){
-		ArrayList<Pista> disponibles = new ArrayList<Pista>();
-		for(Pista pista : pistas) {
-			if(pista.isTipoEstado() && pista.getDificultad() == dificultad && pista.getMaxKarts() >= numKart) {
-				disponibles.add(pista);
-			}
-		}
-		for(Pista pista : disponibles) {
-			System.out.println(pista.getNombrePista());
-		}
-		return disponibles;
+		PistaDAO listar= new PistaDAO();
+		ArrayList<Pista> pistas = listar.listardisponibles(numKart, dificultad);
+		return pistas;
 	}
 }
 	
