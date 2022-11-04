@@ -36,7 +36,7 @@ public class Kart {
 	/* 
 	 * @Resumen Devuelve el tipo de kart
 	 * @return tipokart = bool // true=adulto, false=infantil
-	 */
+	 */ 
 	public boolean getTipoKart() {
 		return tipoKart;
 	}
@@ -61,7 +61,12 @@ public class Kart {
 	public void setEstado(Estados estado) {
 		this.estado = estado;
 	}
-	
+	public int getnombrePista(){
+		return nombrePista;
+		}
+	public string setnombrePista(string nombrePista){
+		this.nombrePista=nombrePista;
+		}
 	/* 
 	 * @Resumen Devuelve una cadena con la informacion del kart
 	 * @return string
