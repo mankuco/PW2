@@ -137,7 +137,7 @@ public class Pista {
 	 */
 	public void asociarKartPista(Kart kart, Pista pista) {
 		pista.getListaKarts().add(kart);
-		kart.setnombrePista(pista.getNombrePista());
+		kart.setnombrePista(pista.getnombrePista());
 		nkartsasociados++;
 	}
 	
