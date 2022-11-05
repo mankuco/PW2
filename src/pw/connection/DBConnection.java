@@ -1,8 +1,6 @@
 package pw.connection;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DBConnection {
 
@@ -15,20 +13,23 @@ public class DBConnection {
 	protected String password = "pw1234";
 
 	public Connection getConnection(){
-
+		
+		Connection connection = null;
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
-			this.connection = (Connection) DriverManager.getConnection(url, user, password);
+			connection = DriverManager.getConnection(url, user, password);
 			System.out.println("Database connection successfully opened!");
 		} 
 		catch (SQLException e) {
 			System.err.println("Connection to MySQL has failed!");
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e) {
 			System.err.println("JDBC Driver not found.");
 			e.printStackTrace();
+			System.exit(0);
 		}
-		return this.connection;
+		return connection;
 	}
 
 	// We can include here other methods to encapsulate CRUD commands...
