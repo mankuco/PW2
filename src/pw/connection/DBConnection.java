@@ -13,23 +13,22 @@ public class DBConnection {
 	protected String password = "pw1234";
 
 	public Connection getConnection(){
-		
-		Connection connection = null;
+	
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection(url, user, password);
-			System.out.println("Database connection successfully opened!");
+			this.connection = DriverManager.getConnection(url, user, password);
 		} 
 		catch (SQLException e) {
 			System.err.println("Connection to MySQL has failed!");
 			e.printStackTrace();
+			System.exit(0);
 		}
 		catch (ClassNotFoundException e) {
 			System.err.println("JDBC Driver not found.");
 			e.printStackTrace();
 			System.exit(0);
 		}
-		return connection;
+		return this.connection;
 	}
 
 	// We can include here other methods to encapsulate CRUD commands...
@@ -38,11 +37,12 @@ public class DBConnection {
 		try {
 			if(this.connection != null && !this.connection.isClosed()) {
 				this.connection.close();
-				System.out.println("Database connection successfully closed!");
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			System.err.println("Error while trying to close the connection.");
 			e.printStackTrace();
+			System.exit(0);
 		}
 	}
 }

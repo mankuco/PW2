@@ -70,7 +70,6 @@ public class KartDAO {
 				if(est.equals("DISPONIBLE")) {
 					estado = Estados.DISPONIBLE;
 				}
-				int maxKarts = rs.getInt("maxKarts");
 				kart = new Kart(idKart, tipoKart, estado);
 			}
 			if (stmt != null){ 
@@ -85,7 +84,53 @@ public class KartDAO {
 		return kart;
 	}
 	
+
+	/* 
+	 * @Resumen Devuelve la lista con todos los karts que tiene asociados
+	 * @return listakart = ArrayList<Kart>
+	 */
+	public ArrayList<Kart> listarkart(String nombrePista){
+		ArrayList<Kart> listakart = new ArrayList<Kart>();
+		try {
+			DBConnection dbConnection = new DBConnection();
+			Connection connection = dbConnection.getConnection();
+			String query = "select tipoKart, estado, idKart from Kart where nombrePista = \"" + nombrePista + "\"";
+			Statement stmt = connection.createStatement();
+			ResultSet rs = (ResultSet) stmt.executeQuery(query);
+			while (rs.next()) {
+				int i = rs.getInt("tipoKart");
+				boolean tipoKart = true;
+				if(i == 0) {
+					tipoKart = false;
+				}
+				String est = rs.getString("estado");
+				Estados estado = Estados.RESERVADO;
+				if(est.equals("ADULTOS")) {
+					estado = Estados.MANTENIMIENTO;
+				}
+				if(est.equals("DISPONIBLE")) {
+					estado = Estados.DISPONIBLE;
+				}
+				int idKart = rs.getInt("idKart");
+				listakart.add(new Kart(idKart, tipoKart, estado));
+			}
+			if (stmt != null){ 
+				stmt.close(); 
+			}
+			dbConnection.closeConnection();
+		}
+		catch (Exception e) {
+			System.err.println(e);
+			e.printStackTrace();
+		}
+		return listakart;
+	}
 	
+	/* 
+	 * @Resumen Cambia el valor de la variable nombrePista en el kart
+	 * @param kart = Kart, el kart que se quiere asociaciar
+	 * @param pista = Pista, la pista a la que se le quiere asociar un kart
+	 */
 	public void cambiarnombrePista(Kart kart, Pista pista) {
 		try {
 			DBConnection dbConnection = new DBConnection();

@@ -21,6 +21,8 @@ public class Pista {
 		this.dificultad = dificultad;
 		this.maxKarts = maxKarts;
 		this.nkartsasociados=0;
+		KartDAO listar = new KartDAO();
+		this.listaKarts=listar.listarkart(nombrePista);
 	}
 	//CONSTRUCTOR
 	public Pista() {
@@ -112,7 +114,6 @@ public class Pista {
 	public void setListaKarts(ArrayList<Kart> listaKarts) {
 		this.listaKarts = listaKarts;
 	}
-
 	
 	/* 
 	 * @Resumen Devuelve un vector con todas las pistas disponibles
@@ -142,7 +143,9 @@ public class Pista {
 		kart.setnombrePista(pista.getNombrePista());
 		KartDAO modificar = new KartDAO();
 		modificar.cambiarnombrePista(kart,pista);
-		nkartsasociados++;
+		pista.setnkartsasociados(pista.getnkartsasociados() + 1);
+		PistaDAO cambiar = new PistaDAO();
+		cambiar.cambiarnkartsasociados(pista);
 	}
 	
 	/* 

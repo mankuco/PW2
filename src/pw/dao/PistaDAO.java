@@ -54,7 +54,7 @@ public class PistaDAO {
 		try {
 			DBConnection dbConnection = new DBConnection();
 			Connection connection = dbConnection.getConnection();
-			String query = "select tipoEstado, dificultad, maxKarts from Pista where nombrePista = " + nombrePista;
+			String query = "select tipoEstado, dificultad, maxKarts, nkartsasociados from Pista where nombrePista =\"" + nombrePista + "\"";
 			Statement stmt = connection.createStatement();
 			ResultSet rs = (ResultSet) stmt.executeQuery(query);
 			while (rs.next()) {
@@ -73,6 +73,8 @@ public class PistaDAO {
 				}
 				int maxKarts = rs.getInt("maxKarts");
 				pista = new Pista(nombrePista, tipoEstado, dificultad, maxKarts);
+				int nkartsasociados = rs.getInt("nkartsasociados");
+				pista.setnkartsasociados(nkartsasociados);
 			}
 			if (stmt != null){ 
 				stmt.close(); 
@@ -84,6 +86,26 @@ public class PistaDAO {
 			e.printStackTrace();
 		}
 		return pista;
+	}
+
+	/* 
+	 * @Resumen Cambiar el valor de karts que tiene asociados una pista
+	 * @param pista = Pista
+	 */
+	public void cambiarnkartsasociados(Pista pista) {
+		try {
+			DBConnection dbConnection = new DBConnection();
+			Connection connection = dbConnection.getConnection();
+			PreparedStatement ps=connection.prepareStatement("update Pista set nkartsasociados=? where nombrePista=?");
+			ps.setInt(1,pista.getnkartsasociados());
+			ps.setString(2,pista.getNombrePista());
+			ps.executeUpdate();
+			dbConnection.closeConnection();
+		}
+		catch (Exception e) {
+			System.err.println(e);
+			e.printStackTrace();
+		}
 	}
 	
 	/* 
@@ -135,19 +157,26 @@ public class PistaDAO {
 		try {
 			DBConnection dbConnection = new DBConnection();
 			Connection connection = dbConnection.getConnection();
-			String query = "select nombrePista, maxKarts from Pista where tipoEstado = 1, maxKarts >= " + numKart + ", dificultad = INFANTIL";
-			if(dificultad == Dificultades.FAMILIAR) {
-				query = "select nombrePista, maxKarts from Pista where tipoEstado = 1, maxKarts >= " + numKart + ", dificultad = FAMILIAR";
-			}
-			else if(dificultad == Dificultades.ADULTOS) {
-				query = "select nombrePista, maxKarts from Pista where tipoEstado = 1, maxKarts >= " + numKart + ", dificultad = ADULTOS";
-			}
+			String query = "select nombrePista, maxKarts, nkartsasociados, dificultad from Pista where tipoEstado = 1";
 			Statement stmt = connection.createStatement();
 			ResultSet rs = (ResultSet) stmt.executeQuery(query);
+			String dif = "FAMILIAR";
+			if(dificultad == Dificultades.ADULTOS) {
+				dif = "ADULTOS";
+			}
+			else if(dificultad == Dificultades.INFANTIL) {
+				dif = "INFANTIL";
+			}
 			while (rs.next()) {
-				String nombrePista = rs.getString("nombrePista");
 				int maxKarts = rs.getInt("maxKarts");
-				listadisponibles.add(new Pista(nombrePista, true, dificultad, maxKarts));
+				String dificul = rs.getString("dificultad");
+				int nkartsasociados = rs.getInt("nkartsasociados");
+				if((nkartsasociados >= numKart) && (dif.equals(dificul))) {
+					String nombrePista = rs.getString("nombrePista");
+					Pista pista = new Pista(nombrePista, true, dificultad, maxKarts);
+					pista.setnkartsasociados(nkartsasociados);
+					listadisponibles.add(pista);
+				}
 			}
 			if (stmt != null){ 
 				stmt.close(); 

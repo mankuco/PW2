@@ -56,14 +56,22 @@ public class Kart {
 	}
 	/* 
 	 * @Resumen Cambia el estado del kart
-	 * @return estado = Estados // DISPONIBLE, RESERVADO o MANTENIMIENTO 
+	 * @param estado = Estados // DISPONIBLE, RESERVADO o MANTENIMIENTO 
 	 */
 	public void setEstado(Estados estado) {
 		this.estado = estado;
 	}
+	/* 
+	 * @Resumen Cambia el nombre de la pista a la que esta asociado el kart
+	 * @return nombrePista = String
+	 */
 	public String getnombrePista(){
 		return nombrePista;
-		}
+	}
+	/* 
+	 * @Resumen Devuelve el nombre de la pista a la que esta asociado el kart
+	 * @param nombrePista = String
+	 */
 	public void setnombrePista(String nombrePista){
 		this.nombrePista=nombrePista;
 		}
