@@ -2,6 +2,8 @@ package pw.pistakart;
 
 import java.util.ArrayList;
 
+import pw.dao.*;
+
 public class Pista {
 	
 	private String nombrePista;
@@ -44,7 +46,7 @@ public class Pista {
 	 * @Resumen Devuelve el estado de la pista
 	 * @return tipoEstado = bool // true=disponible false=no disponible
 	 */
-	public boolean isTipoEstado() {
+	public boolean getTipoEstado() {
 		return tipoEstado;
 	}
 	/* 
@@ -137,7 +139,9 @@ public class Pista {
 	 */
 	public void asociarKartPista(Kart kart, Pista pista) {
 		pista.getListaKarts().add(kart);
-		kart.setnombrePista(pista.getnombrePista());
+		kart.setnombrePista(pista.getNombrePista());
+		KartDAO modificar = new KartDAO();
+		modificar.cambiarnombrePista(kart,pista);
 		nkartsasociados++;
 	}
 	

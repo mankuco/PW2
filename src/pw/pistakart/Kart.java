@@ -61,10 +61,10 @@ public class Kart {
 	public void setEstado(Estados estado) {
 		this.estado = estado;
 	}
-	public int getnombrePista(){
+	public String getnombrePista(){
 		return nombrePista;
 		}
-	public string setnombrePista(string nombrePista){
+	public void setnombrePista(String nombrePista){
 		this.nombrePista=nombrePista;
 		}
 	/* 

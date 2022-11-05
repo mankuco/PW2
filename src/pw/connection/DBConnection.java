@@ -4,17 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * A class to manage the MySQL connection (general methods and configuration).
- * @author Aurora Ramirez
- * @author Jose Raul Romero
- * */
-
 public class DBConnection {
 
 	protected Connection connection = null;
-
-	// Important: This configuration is hard-coded here for illustrative purposes only
 	
 	protected String url = "jdbc:mysql://oraclepr.uco.es:3306/i92curam";
 

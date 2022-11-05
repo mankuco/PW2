@@ -7,14 +7,10 @@ public class Main {
     public static void main(String[] args) {
     	
        Scanner esc = new Scanner(System.in);
-       /*ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
-       ArrayList<Pista> listaPistas = new ArrayList<Pista>();
-       ArrayList<Reserva> listaReservas = new ArrayList<Reserva>();
-       GestorUsuario gestorUsuarios = new GestorUsuario();*/
         
        int num=0;
   
-       while(num<5) {
+       while(num!=4) {
 			System.out.println("MENU PRINCIPAL");
 			System.out.println("1. Ir al menu de usuarios");
 			System.out.println("2. Ir al menu de pistas");

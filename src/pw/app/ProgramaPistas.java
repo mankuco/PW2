@@ -1,17 +1,13 @@
 package pw.app;
 
-import java.time.LocalDate;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import pw.pistakart.GestorPistas;
 import pw.pistakart.Kart;
 import pw.pistakart.Pista;
-import pw.reservas.ReservaAdultos;
 import pw.pistakart.Dificultades;
 import pw.pistakart.Estados;
-import pw.usuario.GestorUsuario;
 
 public class ProgramaPistas {
 
@@ -19,7 +15,6 @@ public class ProgramaPistas {
 		
 		/*Al gestor de pistas hay que pasarle un array de pistas y otro de karts*/
 		GestorPistas factoryGestor = new GestorPistas();
-		GestorUsuario Gestor = new GestorUsuario();
 		Scanner scan = new Scanner(System.in);
 		
 		int num = 0;
@@ -44,10 +39,19 @@ public class ProgramaPistas {
 							System.out.println("La pista ya existe");
 						}
 						else {
-							System.out.println("Introduce el tipo de pista");
-							boolean tipoEstado = scan.nextBoolean();
+							boolean tipoEstado = true;
 							System.out.println("Introduce la dificultad");
-							Dificultades dificultad = Dificultades.valueOf(scan.next());
+							System.out.println("1. Familiar");
+							System.out.println("2. Adultos");
+							System.out.println("3. Infantil");
+							int dif = scan.nextInt();
+							Dificultades dificultad = Dificultades.FAMILIAR;
+							if(dif == 2) {
+								dificultad = Dificultades.ADULTOS;
+							}
+							else if(dif == 3) {
+								dificultad = Dificultades.INFANTIL;
+							}
 							System.out.println("Introduce el numero maximo de karts");
 							int maxKarts = scan.nextInt();
 							factoryGestor.crearPista(nombre, tipoEstado, dificultad, maxKarts);
@@ -62,62 +66,25 @@ public class ProgramaPistas {
 							System.out.println("El kart ya existe");
 						}
 						else {
-							int i=0;
-							Estados estado;
-							while(i==0) {
-								i=1;
-								System.out.println("Introduce el estado del kart");
-								System.out.println("1. Disponible");
-								System.out.println("2. Reservado");
-								System.out.println("3. Mantenimiento");
-								String a = scan.nextLine();
-								try{
-									int est = Integer.parseInt(a);
-									switch(est) {
-										case 1:
-											estado=Estados.DISPONIBLE;
-											break;
-										case 2:
-											estado=Estados.RESERVADO;
-											break;
-										case 3:
-											estado=Estados.MANTENIMIENTO;
-											break;
-										default:
-											System.out.print("Formato no valido");
-											i=0;
-											break;	
-									}
-								}
-								catch (NumberFormatException e) {
-									System.out.print("Formato no valido");
-								}
+							Estados estado = Estados.DISPONIBLE;
+							System.out.println("Introduce el estado del kart");
+							System.out.println("1. Disponible");
+							System.out.println("2. Reservado");
+							System.out.println("3. Mantenimiento");
+							int a = scan.nextInt();
+							if(a == 2) {
+								estado=Estados.RESERVADO;
 							}
-							boolean tipoKart;
-							while(i==1) {
-								i=0;
-								System.out.println("Introduce el tipo de kart");
-								System.out.println("1. Adulto");
-								System.out.println("2. Infantil");
-								String a = scan.nextLine();
-								try{
-									int v = Integer.parseInt(a);
-									switch(v) {
-										case 1:
-											tipoKart=true;
-											break;
-										case 2:
-											tipoKart=false;
-											break;
-										default:
-											System.out.print("Formato no valido");
-											i=1;
-											break;	
-									}
-								}
-								catch (NumberFormatException e) {
-									System.out.print("Formato no valido");
-								}
+							else if(a == 3) {
+								estado=Estados.MANTENIMIENTO;
+							}
+							boolean tipoKart = false;
+							System.out.println("Introduce el tipo de kart");
+							System.out.println("1. Adulto");
+							System.out.println("2. Infantil");
+							a = scan.nextInt();
+							if(a == 1) {
+								tipoKart=true;
 							}
 							factoryGestor.crearKart(idKart,tipoKart, estado);
 							System.out.println("Kart creado");
@@ -170,10 +137,10 @@ public class ProgramaPistas {
 					case 5:
 						System.out.println("Introduce el numero de karts");
 						String a = scan.nextLine();
-						int numkarts,dific;
+						int numkarts;
 						try{
 							numkarts = Integer.parseInt(a);
-							Dificultades dificultad;
+							Dificultades dificultad = Dificultades.FAMILIAR;
 							int i=0;
 							while(i==0){
 								i=1;
@@ -181,27 +148,12 @@ public class ProgramaPistas {
 								System.out.println("1. Familiar");
 								System.out.println("2. Adulto");
 								System.out.println("3. Infantil");
-								a = scan.nextLine();
-								try{
-									dific = Integer.parseInt(a);
-									switch(dific) {
-										case 1:
-											dificultad=Dificultades.FAMILIAR;
-											break;
-										case 2:
-											dificultad=Dificultades.ADULTOS;
-											break;
-										case 3:
-											dificultad=Dificultades.INFANTIL;
-											break;
-										default:
-											System.out.print("Formato no valido");
-											i=0;
-											break;	
-									}
+								int b = scan.nextInt();
+								if(b == 2) {
+									dificultad=Dificultades.ADULTOS;
 								}
-								catch (NumberFormatException e) {
-									System.out.print("Formato no valido");
+								else if(b == 3) {
+									dificultad=Dificultades.INFANTIL;
 								}
 							}
 							ArrayList<Pista> disponibles = factoryGestor.pistasDisponibles(numkarts, dificultad);
