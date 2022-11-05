@@ -6,7 +6,7 @@ public class Main {
 	
     public static void main(String[] args) {
     	
-       Scanner esc = new Scanner(System.in);
+       Scanner scanmain = new Scanner(System.in);
         
        int num=0;
   
@@ -16,7 +16,7 @@ public class Main {
 			System.out.println("2. Ir al menu de pistas");
 			System.out.println("3. Ir al menu de reservas");
 			System.out.println("4. Salir");
-	        String opcion = esc.nextLine();
+	        String opcion = scanmain.nextLine();
 	        
 	        try{
 				num = Integer.parseInt(opcion);
@@ -42,5 +42,6 @@ public class Main {
                     break;
             }
         }
+       scanmain.close();
     }
  }

@@ -48,12 +48,11 @@ public class KartDAO {
 	 * @return null
 	 */
 	public Kart existekart(int idKart) {
-
 		Kart kart = null;
 		try {
 			DBConnection dbConnection = new DBConnection();
 			Connection connection = dbConnection.getConnection();
-			String query = "select tipoKart, estado from Kart where idKart = " + idKart;
+			String query = "select tipoKart, estado, nombrePista from Kart where idKart = " + idKart;
 			Statement stmt = connection.createStatement();
 			ResultSet rs = (ResultSet) stmt.executeQuery(query);
 			while (rs.next()) {
@@ -71,6 +70,7 @@ public class KartDAO {
 					estado = Estados.DISPONIBLE;
 				}
 				kart = new Kart(idKart, tipoKart, estado);
+				kart.setnombrePista(rs.getString("nombrePista"));
 			}
 			if (stmt != null){ 
 				stmt.close(); 
@@ -112,7 +112,9 @@ public class KartDAO {
 					estado = Estados.DISPONIBLE;
 				}
 				int idKart = rs.getInt("idKart");
-				listakart.add(new Kart(idKart, tipoKart, estado));
+				Kart kart = new Kart(idKart, tipoKart, estado);
+				kart.setnombrePista(nombrePista);
+				listakart.add(kart);
 			}
 			if (stmt != null){ 
 				stmt.close(); 

@@ -31,8 +31,6 @@ public class DBConnection {
 		return this.connection;
 	}
 
-	// We can include here other methods to encapsulate CRUD commands...
-
 	public void closeConnection() {
 		try {
 			if(this.connection != null && !this.connection.isClosed()) {

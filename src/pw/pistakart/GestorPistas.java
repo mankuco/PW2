@@ -3,17 +3,15 @@ package pw.pistakart;
 import java.util.ArrayList;
 
 import pw.dao.*;
-import pw.fichero.*;
-import java.util.Scanner;
-
-import pw.usuario.Usuario;
 
 public class GestorPistas {
 	
 	public GestorPistas(){ }
 
 	/* 
-	 * @Resumen Devuelve la pista, si esta registrada en la base de datos, si no lo esta devuelve NULL
+	 * @Resumen Devuelve la pista, si esta registrada en la base de datos, si no lo esta devuelve null
+	 * @param nombrePista = String, es el nombre de la pista que buscamos
+	 * @return pista = Pista, es la pista que ha encontrado (si no la ha encontrado entonces devolvera null)
 	 */
 	public Pista existePista(String nombrePista) {
 		PistaDAO consultar = new PistaDAO();
@@ -21,7 +19,9 @@ public class GestorPistas {
 		return pista;
 	}
 	/* 
-	 * @Resumen Devuelve el kart, si esta registrado en la base de datos., si no lo esta devuelve NULL
+	 * @Resumen Devuelve el kart, si esta registrado en la base de datos., si no lo esta devuelve null
+	 * @param idKart = Kart, es el identificador del kart que buscamos
+	 * @return kart = Kart, es el kart que ha encontrado (si no lo ha encontrado entonces devolvera null)
 	 */
 	public Kart existeKart(int idKart) {
 		KartDAO consultar = new KartDAO();
@@ -31,6 +31,7 @@ public class GestorPistas {
 	
 	/* 
 	 * @Resumen Llama a la funcion void guardarpista(Pista pista)
+	 * @param Entran como parametros todos los datos necesarios para crear una pista
 	 */
 	public void crearPista(String nombre, boolean tipoEstado, Dificultades dificultad, int maxKarts) {
 		Pista pista = new Pista(nombre, tipoEstado, dificultad, maxKarts);
@@ -38,7 +39,8 @@ public class GestorPistas {
 		crear.guardarPista(pista);
 	}
 	/* 
-	 * @Resumen Crea un kart, si no existe ya, y la guarda en la lista karts
+	 * @Resumen Llama a la funcion void guardarKart(Kart kart)
+	 * @param Entran como parametros todos los datos necesarios para crear un kart
 	 */
 	public void crearKart(int idKart, boolean tipoKart, Estados estado) {
 		Kart kart = new Kart(idKart,tipoKart, estado);
@@ -46,6 +48,32 @@ public class GestorPistas {
 		crear.guardarKart(kart);
 	}
 
+	/* 
+	 * @Resumen Devuelve true si el kart esta asignado a una pista
+	 * @param kart = Kart
+	 */
+	public boolean tienepista(Kart kart) {
+		return (kart.getnombrePista() != null);
+	}
+	
+	/* 
+	 * @Resumen Elimina de la lista de karts asignados a una pista el kart que se va a asignar a otra pista distinta y se actualiza el numero de karts asignados
+	 * @param kart = Kart, el kart que hay que eliminar
+	 * @param pista = Pista
+	 */
+	public void eliminarkart(Kart kart, Pista pista) {
+		ArrayList<Kart> array = new ArrayList<Kart>();
+		for(int i = 0; i < pista.getListaKarts().size(); i++) {
+			if(pista.getListaKarts().get(i).getIdKart() != kart.getIdKart()) {
+				array.add(pista.getListaKarts().get(i));
+			}
+		}
+		pista.setListaKarts(array);
+		pista.setnkartsasociados(pista.getnkartsasociados() - 1);
+		PistaDAO cambiar = new PistaDAO();
+		cambiar.cambiarnkartsasociados(pista);
+	}
+	
 	/* 
 	 * @Resumen Lista todas las pistas que no estén en mantenimiento
 	 */

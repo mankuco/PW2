@@ -13,6 +13,7 @@ public class Kart {
 		this.idKart = idKart;
 		this.tipoKart = tipoKart;
 		this.estado = estado;
+		this.nombrePista = null;
 	}
 	//CONSTRUCTOR
 	public Kart() {
@@ -74,7 +75,8 @@ public class Kart {
 	 */
 	public void setnombrePista(String nombrePista){
 		this.nombrePista=nombrePista;
-		}
+	}
+	
 	/* 
 	 * @Resumen Devuelve una cadena con la informacion del kart
 	 * @return string
