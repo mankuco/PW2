@@ -1,9 +1,9 @@
 package pw.fichero;
 
 
-import pw.reservas.ReservaAdultos;
-import pw.reservas.ReservaFamiliar;
-import pw.reservas.ReservaInfantil;
+import pw.reservas.ReservaAdultosDTO;
+import pw.reservas.ReservaFamiliarDTO;
+import pw.reservas.ReservaInfantilDTO;
 import pw.usuario.Usuario;
 
 import java.io.*;
@@ -16,9 +16,9 @@ import java.util.Properties;
 public class Ficheros {
 
 	private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-	private ArrayList<ReservaAdultos> reservasAdultos = new ArrayList<ReservaAdultos>();
-	private ArrayList<ReservaInfantil> reservasInfantiles = new ArrayList<ReservaInfantil>();
-	private ArrayList<ReservaFamiliar> reservasFamiliares = new ArrayList<ReservaFamiliar>();
+	private ArrayList<ReservaAdultosDTO> reservasAdultos = new ArrayList<ReservaAdultosDTO>();
+	private ArrayList<ReservaInfantilDTO> reservasInfantiles = new ArrayList<ReservaInfantilDTO>();
+	private ArrayList<ReservaFamiliarDTO> reservasFamiliares = new ArrayList<ReservaFamiliarDTO>();
 	//public String ficheroUsuarios, ficheroReservas, ficheroKarts, ficheroPistas;
 
 
@@ -183,7 +183,7 @@ public class Ficheros {
 			while ((linea = br.readLine()) != null) {
 				String[] campos = linea.split(";");
 				if (campos[0].equals("infantil")) {
-					ReservaInfantil ri = new ReservaInfantil();
+					ReservaInfantilDTO ri = new ReservaInfantilDTO();
 					ri.setIdReserva(campos[1]);
 					ri.setIdUsuario(campos[2]);
 					ri.setFechaYhora(convertirFechas(campos[3]));
@@ -196,7 +196,7 @@ public class Ficheros {
 					this.reservasInfantiles.add(ri);
 				}
 				else if (campos[0].equals("adultos")) {
-					ReservaAdultos ra = new ReservaAdultos();
+					ReservaAdultosDTO ra = new ReservaAdultosDTO();
 					ra.setIdReserva(campos[1]);
 					ra.setIdUsuario(campos[2]);
 					ra.setFechaYhora(convertirFechas(campos[3]));
@@ -209,7 +209,7 @@ public class Ficheros {
 					this.reservasAdultos.add(ra);
 				}
 				else if (campos[0].equals("familiar")) {
-					ReservaFamiliar rf = new ReservaFamiliar();
+					ReservaFamiliarDTO rf = new ReservaFamiliarDTO();
 					rf.setIdReserva(campos[1]);
 					rf.setIdUsuario(campos[2]);
 					rf.setFechaYhora(convertirFechas(campos[3]));
@@ -248,22 +248,22 @@ public class Ficheros {
 	 * @param listaResAd = vector con las reservas de adultos
 	 * @param listaResFam = vector con las reservas familiares
 	 */
-	public void almacenarFicheroReserva(ArrayList<ReservaInfantil> listaResInf, ArrayList<ReservaAdultos> listaResAd, ArrayList<ReservaFamiliar> listaResFam) {
+	public void almacenarFicheroReserva(ArrayList<ReservaInfantilDTO> listaResInf, ArrayList<ReservaAdultosDTO> listaResAd, ArrayList<ReservaFamiliarDTO> listaResFam) {
 		File fichero = new File("a");
 		FileWriter fw = null;
 		BufferedWriter bw = null;
 		try {
 			fw = new FileWriter(fichero);
 			bw = new BufferedWriter(fw);
-			for (ReservaInfantil ri : listaResInf) {
+			for (ReservaInfantilDTO ri : listaResInf) {
 				bw.write("infantil;" + ri.getIdReserva() + ";" + ri.getIdUsuario() + ";" + ri.getFechaYhora() + ";" + ri.getMinutosReserva() + ";" + ri.getIdPista() + ";" + ri.getPrecioPista() + ";" + ri.getDescuento() + ";" + ri.getModalidad() + ";" + ri.getNumeroNinos() );
 				bw.newLine();
 			}
-			for (ReservaAdultos ra : listaResAd) {
+			for (ReservaAdultosDTO ra : listaResAd) {
 				bw.write("adultos;" + ra.getIdReserva() + ";" + ra.getIdUsuario() + ";" + ra.getFechaYhora() + ";" + ra.getMinutosReserva() + ";" + ra.getIdPista() + ";" + ra.getPrecioPista() + ";" + ra.getDescuento() + ";" + ra.getModalidad() + ";" + ra.getNumeroAdultos() );
 				bw.newLine();
 			}
-			for (ReservaFamiliar rf : listaResFam) {
+			for (ReservaFamiliarDTO rf : listaResFam) {
 				bw.write("adultos;" + rf.getIdReserva() + ";" + rf.getIdUsuario() + ";" + rf.getFechaYhora() + ";" + rf.getMinutosReserva() + ";" + rf.getIdPista() + ";" + rf.getPrecioPista() + ";" + rf.getDescuento() + ";" + rf.getModalidad() + ";" + rf.getNumeroNinos()+ ";" + rf.getNumeroAdultos());
 				bw.newLine();
 			}

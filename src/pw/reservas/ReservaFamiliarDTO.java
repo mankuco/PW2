@@ -3,13 +3,13 @@ package pw.reservas;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class ReservaFamiliar extends ReservaDAO {
+public class ReservaFamiliarDTO extends Reserva {
 	
 	protected int NumeroNinos;
 	protected int NumeroAdultos;
 	
 
-	public ReservaFamiliar(String idUsuario, int minutosReserva, float precioPista, int descuento,
+	public ReservaFamiliarDTO(String idUsuario, int minutosReserva, float precioPista, int descuento,
 			String modalidad, int numeroNinos, int numeroAdultos) {
 		super(idUsuario, minutosReserva, precioPista, descuento, modalidad);
 		NumeroNinos = numeroNinos;
@@ -19,7 +19,7 @@ public class ReservaFamiliar extends ReservaDAO {
 	}
 	
 	
-	public ReservaFamiliar(String idR, String idUsuario, int minutosReserva, float precioPista, int descuento,
+	public ReservaFamiliarDTO(String idR, String idUsuario, int minutosReserva, float precioPista, int descuento,
 			String modalidad, int numeroNinos, int numeroAdultos) {
 		super(idUsuario, minutosReserva, precioPista, descuento, modalidad);
 		this.idReserva = idR;
@@ -31,7 +31,7 @@ public class ReservaFamiliar extends ReservaDAO {
 
 
 
-	public ReservaFamiliar() {
+	public ReservaFamiliarDTO() {
 
 	}
 

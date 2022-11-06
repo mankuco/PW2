@@ -221,7 +221,7 @@ public class ProgramaReservas{
 					else if(opc == 2) {
 						System.out.println("Introduzca el ID de la reserva que se va a editar (no se cambia el ID): ");
 						String ID = (scan.nextLine());
-						if(factoryGestor.buscarReservaF(ID) == null) {
+						if(factoryGestor.buscarReservaA(ID) == null) {
 							System.out.println("No existe ninguna reserva con ese ID");
 							break;
 						}
@@ -333,7 +333,8 @@ public class ProgramaReservas{
 								System.out.println("No existe ninguna reserva con ese ID");
 							}
 							else {
-								factoryGestor.eliminaReservaF(ID);
+								factoryGestor.eliminaReserva(ID);
+								System.out.println("Reserva eliminada con exito");
 							}
 							}
 							break;
@@ -346,7 +347,8 @@ public class ProgramaReservas{
 								System.out.println("No existe ninguna reserva con ese ID");
 							}
 							else {
-								factoryGestor.eliminaReservaA(ID);
+								factoryGestor.eliminaReserva(ID);
+								System.out.println("Reserva eliminada con exito");
 							}
 							}
 							break;
@@ -359,7 +361,8 @@ public class ProgramaReservas{
 								System.out.println("No existe ninguna reserva con ese ID");
 							}
 							else {
-								factoryGestor.eliminaReservaI(ID);
+								factoryGestor.eliminaReserva(ID);
+								System.out.println("Reserva eliminada con exito");
 							}
 							}
 							break;

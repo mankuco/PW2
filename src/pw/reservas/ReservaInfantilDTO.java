@@ -3,13 +3,13 @@ package pw.reservas;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class ReservaInfantil extends ReservaDAO  {
+public class ReservaInfantilDTO extends Reserva  {
 	
 	protected int NumeroNinos;
 	
 	
 
-	public ReservaInfantil(
+	public ReservaInfantilDTO(
 			String idUsuario,
 			int minutosReserva, 
 			float precioPista,
@@ -22,7 +22,7 @@ public class ReservaInfantil extends ReservaDAO  {
 		this.idPista=03;
 	}
 
-	public ReservaInfantil(String idReserva,
+	public ReservaInfantilDTO(String idReserva,
 			String idUsuario,
 			int minutosReserva, 
 			float precioPista,
@@ -36,7 +36,7 @@ public class ReservaInfantil extends ReservaDAO  {
 		this.idPista=03;
 	}
 
-	public ReservaInfantil() {
+	public ReservaInfantilDTO() {
 
 	}
 
